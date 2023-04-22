@@ -1,0 +1,33 @@
+apiVersion:  networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dns-ingress-nginx
+  annotations:
+     nginx.ingress.kubernetes.io/rewrite-target: /
+     kubernetes.io/ingress.class: 'public'
+     nginx.ingress.kubernetes.io/backend-protocol: HTTP
+     nginx.ingress.kubernetes.io/client-body-buffer-size: 32k
+     nginx.ingress.kubernetes.io/proxy-body-size: 128M
+     nginx.ingress.kubernetes.io/proxy-buffer-size: 4k
+     nginx.ingress.kubernetes.io/proxy-buffers-number: "16"
+     nginx.ingress.kubernetes.io/proxy-connect-timeout: 120s
+     nginx.ingress.kubernetes.io/proxy-read-timeout: 120s
+     nginx.ingress.kubernetes.io/proxy-send-timeout: 120s
+     ingress.kubernetes.io/ssl-redirect: "true"
+     kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+      - demos.basics.ai
+    secretName: tls-basicsai
+  rules:
+  - host: demoss.basics.ai
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: myhelmapp
+            port:
+              number: 80
