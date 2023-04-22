@@ -21,7 +21,7 @@ spec:
       - demos.basics.ai
     secretName: tls-basicsai
   rules:
-  - host: demoss.basics.ai
+  - host: demos.basics.ai
     http:
       paths:
       - path: /
